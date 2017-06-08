@@ -9,6 +9,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Routing\Controller as BaseController;
+use App\Entities\RequestParams as RequestParams;
 
 /**
  * Description of CampaignController
@@ -17,16 +18,18 @@ use Illuminate\Routing\Controller as BaseController;
  */
 class CampaignController extends BaseController
 {
-	public function __construct()
+	private $request_params;
+	
+	public function __construct(RequestParams $request_params)
 	{
-		
+		$this->request_params = $request_params;
 	}
 	
 	public function campaign_router($details_str = null)
 	{
 		$details = $this->get_campaign_details_from_string($details_str);
 		
-		var_dump($details);
+		
 	}
 
 	private function get_campaign_details_from_string($details_str)
