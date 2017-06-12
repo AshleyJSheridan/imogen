@@ -25,15 +25,9 @@ class CampaignController extends BaseController
 		$this->config_helper = $config_helper;
 	}
 	
-	public function campaign_router($details_str = null)
+	public function campaign_router()
 	{
-		$details = $this->get_campaign_details_from_string($details_str);
-		
 		
 	}
 
-	private function get_campaign_details_from_string($details_str)
-	{
-		return explode('/', $details_str);
-	}
 }
