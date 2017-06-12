@@ -12,9 +12,9 @@
 */
 
 Route::get(
-	'/campaign/{details}', 
+	'/campaign/{name}', 
 	[
 		'as' => 'campaign_router', 
 		'uses' => 'CampaignController@campaign_router'
 	]
-)->where(['details' => '[a-z_\-]+']);
+)->where(['name' => '[a-z_\-]+']);
