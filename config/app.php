@@ -200,7 +200,6 @@ return [
 		'Bus' => Illuminate\Support\Facades\Bus::class,
 		'Cache' => Illuminate\Support\Facades\Cache::class,
 		'Config' => Illuminate\Support\Facades\Config::class,
-		'ConfigHelper' => App\Helpers\ConfigHelper::class,
 		'Cookie' => Illuminate\Support\Facades\Cookie::class,
 		'Crypt' => Illuminate\Support\Facades\Crypt::class,
 		'DB' => Illuminate\Support\Facades\DB::class,
