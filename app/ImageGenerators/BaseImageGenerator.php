@@ -68,7 +68,7 @@ class BaseImageGenerator
 				$base_image = imagecreatefromjpeg($filename);
 				break;
 			case 'png':
-				$base_image = imagecreatefrompng($$filenameimg_file);
+				$base_image = imagecreatefrompng($filename);
 				break;
 			case 'gif':
 				$base_image = imagecreatefromgif($filename);
