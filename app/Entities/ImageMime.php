@@ -20,4 +20,9 @@ class ImageMime
 	{
 		return substr($this->mime, strpos($this->mime, '/') + 1);
 	}
+	
+	public function __toString()
+	{
+		return $this->mime;
+	}
 }

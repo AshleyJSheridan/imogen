@@ -6,7 +6,7 @@ return [
 	//'base'			=> 'train/train_base.jpg',
 	'width'			=> 600,
 	'height'		=> 350,
-	'background'	=> '#f00',
+	'background'	=> '#0070b0',
 	'colour'		=> '#fff',
 	'alignment'		=> 'center',
 	'v_alignment'	=> 'top',

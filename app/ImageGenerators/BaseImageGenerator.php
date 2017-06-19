@@ -18,6 +18,7 @@ class BaseImageGenerator
 	private $source_assets_helper;
 	private $file_mime_helper;
 	private $image_properties;
+	private $base_image;
 
 	public function __construct(SourceAssetsHelper $source_assets_helper, FileMimeHelper $file_mime_helper, ImageProperties $image_properties)
 	{
@@ -32,22 +33,24 @@ class BaseImageGenerator
 		
 		if(!empty($base_uri) )
 		{
-			$base_image = $this->create_base_image_from_existing($base_uri);
+			$this->base_image = $this->create_base_image_from_existing($base_uri);
 		}
 		else
 		{
 			if(!empty($config->get('width') ) && !empty($config->get('height') ) )
 			{
-				$base_image = $this->create_blank_base_image($config->get('width'), $config->get('height'), $config->get('background'), $config->get('format') );
+				$this->base_image = $this->create_blank_base_image($config->get('width'), $config->get('height'), $config->get('background'), $config->get('format') );
 			}
 			else
 			{
 				throw new App\Exceptions\InvalidImageBaseException('Invalid base image, or width and height base values');
 			}
 		}
-		var_dump($base_image);
+		
+		//header("Content-Type: {$this->image_properties->get_mime_string()}");
+		//imagejpeg($this->base_image);
 
-		return $base_image;
+		return $this;
 	}
 	
 	private function create_blank_base_image($width, $height, $background, $format)
@@ -62,10 +65,11 @@ class BaseImageGenerator
 		{
 			$fill_colour = new \App\Entities\Colour($background);
 			$fill_id = $this->image_properties->add_colour($fill_colour, $base_image);
+
+			imagefilledrectangle($base_image, 0, 0, $width, $height, $fill_id);
 		}
-		
-//		$fill = $this->add_colour($background, $base_image);
-//		imagefilledrectangle($base_image, 0, 0, $width, $height, $fill);
+
+		return $base_image;
 	}
 	
 	private function create_base_image_from_existing($base_uri)

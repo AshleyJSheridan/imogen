@@ -4,6 +4,7 @@ namespace App\Entities;
 
 use App\Entities\ImageMime as ImageMime;
 use App\Entities\ColourList as ColourList;
+use App\Entities\Colour as Colour;
 
 /**
  * Description of ImageProperties
@@ -34,13 +35,35 @@ class ImageProperties
 		$this->height = $height;
 	}
 	
+	public function get_width()
+	{
+		return $this->width;
+	}
+	
+	public function get_height()
+	{
+		return $this->height;
+	}
+	
 	public function set_mime(ImageMime $mime)
 	{
 		$this->mime = $mime;
 	}
 	
+	public function get_mime()
+	{
+		return $this->mime;
+	}
+	
+	public function get_mime_string()
+	{
+		return (string)$this->mime;
+	}
+
 	public function add_colour($colour, &$image)
 	{
+		//$colour = new Colour($colour_hex);
+		
 		return $this->colours->add_colour($colour, $image);
 	}
 }

@@ -9,25 +9,47 @@ namespace App\Entities;
  */
 class Colour
 {
-	private $alpha;
-	private $r;
-	private $g;
-	private $b;
+	private $alpha = 0;
+	private $r = 0;
+	private $g = 0;
+	private $b = 0;
 		
 	public function __construct($colour)
 	{
-		$colour = $this->normalise_hex_and_extract_alpha($colour);
-		
-		$rgb = sscanf($colour, '%2x%2x%2x');
-		
-		$this->r = $rgb[0];
-		$this->g = $rgb[1];
-		$this->b = $rgb[2];
+		$clean_colour = $this->remove_hash($colour);
+		$normalised_colour = $this->normalise_hex_and_extract_alpha($clean_colour);
+
+		list($this->r, $this->g, $this->b) = sscanf($normalised_colour, "%02x%02x%02x");
 	}
 	
 	public function __toString()
 	{
 		return $this->get_string();
+	}
+	
+	public function get_string()
+	{
+		return dechex($this->r) . dechex($this->g) . dechex($this->b) . dechex($this->alpha);
+	}
+	
+	public function get_red()
+	{
+		return $this->r;
+	}
+	
+	public function get_green()
+	{
+		return $this->g;
+	}
+	
+	public function get_blue()
+	{
+		return $this->b;
+	}
+	
+	public function get_alpha()
+	{
+		return $this->alpha;
 	}
 	
 	private function normalise_hex_and_extract_alpha($colour)
@@ -59,28 +81,8 @@ class Colour
 		return $colour;
 	}
 	
-	public function get_string()
+	private function remove_hash($colour)
 	{
-		return dechex($this->r) . dechex($this->g) . dechex($this->b) . dechex($this->alpha);
-	}
-	
-	public function get_red()
-	{
-		return $this->r;
-	}
-	
-	public function get_green()
-	{
-		return $this->g;
-	}
-	
-	public function get_blue()
-	{
-		return $this->b;
-	}
-	
-	public function get_alpha()
-	{
-		return $this->alpha;
+		return str_replace('#', '', $colour);
 	}
 }

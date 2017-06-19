@@ -13,15 +13,17 @@ class ColourList extends \SplDoublyLinkedList
 {
 	private $colours = [];
 	
+	public function push($value) {}
+	
 	public function add_colour(Colour $colour, &$image)
 	{
-		$colour_string = $colour->get_string();
-		
+		$colour_key = $colour->get_string();
+
 		if($colour->get_alpha() )
-			$this->colours[$colour_string] = imagecolorallocatealpha($image, $colour->get_red(), $colour->get_green(), $colour->get_blue(), $colour->get_alpha() );
+			$this->colours[$colour_key] = imagecolorallocatealpha($image, $colour->get_red(), $colour->get_green(), $colour->get_blue(), $colour->get_alpha() );
 		else
-			$this->colours[$colour_string] = imagecolorallocate($image, $colour->get_red(), $colour->get_green(), $colour->get_blue() );
+			$this->colours[$colour_key] = imagecolorallocate($image, $colour->get_red(), $colour->get_green(), $colour->get_blue() );
 		
-		return $this->colours[$colour_string];
+		return $this->colours[$colour_key];
 	}
 }
