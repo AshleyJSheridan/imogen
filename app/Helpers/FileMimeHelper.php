@@ -32,4 +32,14 @@ class FileMimeHelper
 		else
 			throw new \App\Exceptions\UnrecognisedImageType("Unrecognised image type for $filename");
 	}
+	
+	public function get_mime_from_extension($extension)
+	{
+		if($extension == 'gif' || $extension == 'png')
+			$this->image_mime->set_mime("image/$extension");
+		else
+			$this->image_mime->set_mime("image/jpeg");
+		
+		return $this->image_mime;
+	}
 }
