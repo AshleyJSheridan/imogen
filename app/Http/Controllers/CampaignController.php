@@ -25,6 +25,8 @@ class CampaignController extends BaseController
 	public function campaign_router()
 	{
 		$base_image = $this->base_image_generator->create_base_image($this->config_helper);
+		
+		
 	}
 
 }

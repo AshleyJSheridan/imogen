@@ -15,11 +15,9 @@ class Colour
 	private $b = 0;
 		
 	public function __construct($colour)
-	{
+	{		
 		$clean_colour = $this->remove_hash($colour);
-		$normalised_colour = $this->normalise_hex_and_extract_alpha($clean_colour);
-
-		list($this->r, $this->g, $this->b) = sscanf($normalised_colour, "%02x%02x%02x");
+		$this->extract_colour_values($clean_colour);
 	}
 	
 	public function __toString()
@@ -52,33 +50,40 @@ class Colour
 		return $this->alpha;
 	}
 	
-	private function normalise_hex_and_extract_alpha($colour)
+	private function extract_colour_values($colour)
 	{
 		$colour_hex_length = strlen($colour);
-		
-		if($colour_hex_length == 6)
-			return $colour;
-		else
+
+		// extract the alpha value for 4 and 8 character strings
+		// normalise short hex #rgb into long hex #rrggbb format
+		// and then extract the rgb from the 6 character string left over
+		switch($colour_hex_length)
 		{
-			switch($colour_hex_length)
-			{
-				case 3:
-					$colour = preg_replace('/^([0-9a-z])([0-9a-z])([0-9a-z])$/', '$1$1$2$2$3$3', $colour);
-					break;
-				case 4:
-					$this->alpha = intval(floor(hexdec(substr($colour, -1).substr($colour, -1) ) / 2 ) );
-					$colour = preg_replace('/^([0-9a-z])([0-9a-z])([0-9a-z])([0-9a-z])$/', '$1$1$2$2$3$3', $colour);
-					break;
-				case 8:
-					$this->alpha = intval(floor(hexdec(substr($colour, -2) ) / 2 ) );
-					$colour = substr($colour, 0, 6);
-					break;
-				default:
-					throw new \App\Exceptions\InvalidColourHexException("Invalid colour $colour used");
-			}
+			case 3:
+				$colour = preg_replace('/^([0-9a-z])([0-9a-z])([0-9a-z])$/', '$1$1$2$2$3$3', $colour);
+				break;
+			case 4:
+				$this->alpha = intval(floor(hexdec(substr($colour, -1).substr($colour, -1) ) / 2 ) );
+				$colour = preg_replace('/^([0-9a-z])([0-9a-z])([0-9a-z])([0-9a-z])$/', '$1$1$2$2$3$3', $colour);
+				break;
+			case 8:
+				$this->alpha = intval(floor(hexdec(substr($colour, -2) ) / 2 ) );
+				$colour = substr($colour, 0, 6);
+				break;
+			default:
+				throw new \App\Exceptions\InvalidColourHexException("Invalid colour $colour used");
+			case 6:
+				break;
 		}
 		
+		$this->extract_rgb_from_6_char_hex($colour);
+
 		return $colour;
+	}
+	
+	private function extract_rgb_from_6_char_hex($hex)
+	{
+		list($this->r, $this->g, $this->b) = sscanf($hex, "%02x%02x%02x");
 	}
 	
 	private function remove_hash($colour)

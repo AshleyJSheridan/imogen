@@ -47,10 +47,12 @@ class BaseImageGenerator
 			}
 		}
 		
-		//header("Content-Type: {$this->image_properties->get_mime_string()}");
-		//imagejpeg($this->base_image);
+//		header("Content-Type: {$this->image_properties->get_mime_string()}");
+//		imagejpeg($this->base_image);
+		
+		$base_image = new ImageLayer($this->base_image, $this->image_properties);
 
-		return $this;
+		return $base_image;
 	}
 	
 	private function create_blank_base_image($width, $height, $background, $format)
@@ -81,10 +83,8 @@ class BaseImageGenerator
 		$this->image_properties->set_uri($base_real_path);
 		$this->image_properties->set_dimensions(imagesx($image_data), imagesy($image_data));
 		$this->image_properties->set_mime($mime);
-		
-		$base_image = new ImageLayer($image_data, $this->image_properties);
-		
-		return $base_image;
+
+		return $image_data;
 	}
 	
 	private function load_base_image($filename, ImageMime $mime)

@@ -3,7 +3,7 @@ return [
 	'type'			=> 'flat',
 	'sample'		=> 'ash, your carriage/Coach abcd/seat 123/awaits...',
 	'description'	=> 'personalised image with name and seat details',
-	//'base'			=> 'train/train_base.jpg',
+	'base'			=> 'train/train_base.jpg',
 	'width'			=> 600,
 	'height'		=> 350,
 	'background'	=> '#0070b0',
