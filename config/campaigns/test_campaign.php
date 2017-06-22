@@ -12,7 +12,6 @@ return [
 	'v_alignment'	=> 'top',
 	'angle'			=> 0,
 	'font'			=> 'LiberationSans-Regular.ttf',
-	'debug'       => true,	// enable to draw lines around bounding boxes of stuff
 	'overlays'    => [
 		'intro' => [
 			'type'				=> 'text',
@@ -28,7 +27,7 @@ return [
 		'coach' => [
 			'type'				=> 'text',
 			'content'			=> 'coach {{coach}}',
-			'font'				=> 'train/matricha_0.ttf',
+			'font'				=> 'train/scoreboard.ttf',
 			'size'				=> 70,
 			'min_size'			=> 60,
 			'generic_content'	=> 'any coach',
@@ -41,7 +40,7 @@ return [
 		'seat' => [
 			'type'				=> 'text',
 			'content'			=> 'seat {{seat}}',
-			'font'				=> 'train/matricha_0.ttf',
+			'font'				=> 'train/scoreboard.ttf',
 			'size'				=> 44,
 			'min_size'			=> 30,
 			'generic_content'	=> 'any seat',
