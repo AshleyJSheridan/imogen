@@ -14,10 +14,12 @@ class ConfigHelper
 {
 	private $campaign_name;
 	private $config;
+	private $request;
 	
 	public function __construct(Request $request)
 	{
-		$this->campaign_name = $request->route('name');
+		$this->request = $request;
+		$this->campaign_name = $this->request->route('name');
 	}
 	
 	public function get($option)
@@ -49,5 +51,29 @@ class ConfigHelper
 				throw new \App\Exceptions\MissingConfigOptionException("$option is missing in overlay config and no fallback available");
 			}
 		}
+	}
+	
+	public function get_random($option)
+	{
+		$content_array = $this->get_for_overlay($option);
+		
+		return $content_array[rand(0, count($content_array) - 1 )];
+	}
+	
+	public function substitute_content_with_request_params($content)
+	{
+		// the regular expression matches any substring in the form {{substring}} and replaces it with
+		// the value of the corresponding request parameter of the same key
+		$substituted_content = preg_replace_callback(
+			'/\{\{([^\}]+)\}\}/',
+			function($matches) {
+				$param_key = $matches[1];
+			
+				return $this->request->get($param_key);
+			},
+			$content
+		);
+		
+		return $substituted_content;
 	}
 }

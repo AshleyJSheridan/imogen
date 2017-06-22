@@ -6,6 +6,7 @@ use Illuminate\Routing\Controller as BaseController;
 use App\Helpers\ConfigHelper as ConfigHelper;
 use App\ImageGenerators\BaseImageGenerator as BaseImageGenerator;
 use App\Entities\Image as Image;
+use App\Entities\ImageProperties as ImageProperties;
 
 /**
  * Description of CampaignController
@@ -17,12 +18,14 @@ class CampaignController extends BaseController
 	private $config_helper;
 	private $base_image_generator;
 	private $image;
+	private $image_properties;
 
-	public function __construct(ConfigHelper $config_helper, BaseImageGenerator $base_image_generator, Image $image)
+	public function __construct(ConfigHelper $config_helper, BaseImageGenerator $base_image_generator, Image $image, ImageProperties $image_properties)
 	{
 		$this->config_helper = $config_helper;
 		$this->base_image_generator = $base_image_generator;
 		$this->image = $image;
+		$this->image_properties = $image_properties;
 	}
 	
 	public function campaign_router()
@@ -54,9 +57,9 @@ class CampaignController extends BaseController
 			$type = ucfirst($this->config_helper->get_for_overlay($overlay_name, 'type') );
 			$overlay_generator_class = "App\\ImageGenerators\\{$type}Generator";
 			
-			$overlay_generator_class_instance = new $overlay_generator_class($this->config_helper);
+			$overlay_generator_class_instance = new $overlay_generator_class($this->image, $this->config_helper, $this->image_properties);
 			
-			$overlay_generator_class_instance->add($this->image[$layer_index], $overlay_name);
+			$overlay_generator_class_instance->add($layer_index, $overlay_name);
 		}
 	}
 }

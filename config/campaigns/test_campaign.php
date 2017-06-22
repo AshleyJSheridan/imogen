@@ -10,6 +10,7 @@ return [
 	'colour'		=> '#fff',
 	'alignment'		=> 'center',
 	'v_alignment'	=> 'top',
+	'angle'			=> 0,
 	'font'			=> 'LiberationSans-Regular.ttf',
 	'debug'       => true,	// enable to draw lines around bounding boxes of stuff
 	'overlays'    => [
@@ -23,6 +24,7 @@ return [
 			'y1'				=> 45,
 			'x2'				=> 589,
 			'y2'				=> 70,
+			'colour'			=> '#0ff',
 		],
 		'coach' => [
 			'type'				=> 'text',

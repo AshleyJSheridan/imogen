@@ -11,7 +11,7 @@ use App\Entities\ImageProperties as ImageProperties;
  */
 class ImageLayer
 {
-	private $image_data;
+	public $image_data;
 	private $properties;
 	
 	public function __construct($image_data, ImageProperties $properties)

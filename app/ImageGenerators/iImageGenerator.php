@@ -2,8 +2,10 @@
 
 namespace App\ImageGenerators;
 
+use App\Entities\Image as Image;
 use App\Entities\ImageLayer as ImageLayer;
 use App\Helpers\ConfigHelper as ConfigHelper;
+use App\Entities\ImageProperties as ImageProperties;
 
 /**
  *
@@ -11,7 +13,7 @@ use App\Helpers\ConfigHelper as ConfigHelper;
  */
 interface iImageGenerator
 {
-	public function __construct(ConfigHelper $config_helper);
+	public function __construct(Image $image, ConfigHelper $config_helper, ImageProperties $image_properties);
 	
-	public function add(ImageLayer &$image, $overlay_name);
+	public function add($image_layer_index, $overlay_name);
 }
