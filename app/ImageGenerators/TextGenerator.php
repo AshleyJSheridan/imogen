@@ -68,8 +68,10 @@ class TextGenerator implements iImageGenerator
 				$y2 = $this->config_helper->get_for_overlay($overlay_name, 'y2');
 				
 				$x = $this->get_position($bounding_width, $text_box->get_box_width(), $x1, $x2, $alignment);
-				// adding the baseline offset to allow because ttftextbox doesn't account for it normally
-				$y = $this->get_position($bounding_height, $text_box->get_box_height(), $y1, $y2, $v_alignment) + $text_box->get_baseline_offset();
+				// subtracting the baseline offset to allow because ttftextbox doesn't account for it normally
+				$y = $this->get_position($bounding_height, $text_box->get_box_height(), $y1, $y2, $v_alignment) - $text_box->get_baseline_offset();
+				
+				//var_dump($y, $v_alignment, $y1, $y2, $bounding_height, $text_box->get_box_height() );exit;
 				
 				$font_file = $this->source_assets_helper->get_real_source_path($font);
 
