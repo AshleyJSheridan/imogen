@@ -71,8 +71,6 @@ class TextGenerator implements iImageGenerator
 				// subtracting the baseline offset to allow because ttftextbox doesn't account for it normally
 				$y = $this->get_position($bounding_height, $text_box->get_box_height(), $y1, $y2, $v_alignment) - $text_box->get_baseline_offset();
 				
-				//var_dump($y, $v_alignment, $y1, $y2, $bounding_height, $text_box->get_box_height() );exit;
-				
 				$font_file = $this->source_assets_helper->get_real_source_path($font);
 
 				imagettftext($this->image[$image_layer_index]->image_data, $size, $angle, $x, $y, $colour, $font_file, $text);
