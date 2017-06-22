@@ -46,10 +46,7 @@ class BaseImageGenerator
 				throw new App\Exceptions\InvalidImageBaseException('Invalid base image, or width and height base values');
 			}
 		}
-		
-//		header("Content-Type: {$this->image_properties->get_mime_string()}");
-//		imagejpeg($this->base_image);
-		
+
 		$base_image = new ImageLayer($this->base_image, $this->image_properties);
 
 		return $base_image;
