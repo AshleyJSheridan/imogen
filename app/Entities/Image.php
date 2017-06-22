@@ -15,25 +15,25 @@ class Image implements \ArrayAccess
 	
 	public function offsetExists($offset)
 	{
-		return isset($this->container[$offset]);
+		return isset($this->image_layers[$offset]);
 	}
 	
 	public function offsetGet($offset)
 	{
-		return isset($this->container[$offset]) ? $this->container[$offset] : null;
+		return isset($this->image_layers[$offset]) ? $this->image_layers[$offset] : null;
 	}
 	
 	public function offsetSet($offset, $value)
 	{
 		if (is_null($offset))
-			$this->container[] = $value;
+			$this->image_layers[] = $value;
 		else
-			$this->container[$offset] = $value;
+			$this->image_layers[$offset] = $value;
     }
 	
 	public function offsetUnset($offset)
 	{
-		unset($this->container[$offset]);
+		unset($this->image_layers[$offset]);
 	}
 	
 	public function add_layer(ImageLayer $image_layer)
