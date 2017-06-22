@@ -24,11 +24,10 @@ return [
 			'y1'				=> 45,
 			'x2'				=> 589,
 			'y2'				=> 70,
-			'colour'			=> '#0ff',
 		],
 		'coach' => [
 			'type'				=> 'text',
-			'content'			=> '{{coach}}',
+			'content'			=> 'coach {{coach}}',
 			'font'				=> 'train/matricha_0.ttf',
 			'size'				=> 70,
 			'min_size'			=> 60,
@@ -41,7 +40,7 @@ return [
 		],
 		'seat' => [
 			'type'				=> 'text',
-			'content'			=> '{{seat}}',
+			'content'			=> 'seat {{seat}}',
 			'font'				=> 'train/matricha_0.ttf',
 			'size'				=> 44,
 			'min_size'			=> 30,
