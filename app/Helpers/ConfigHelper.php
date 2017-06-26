@@ -29,7 +29,7 @@ class ConfigHelper
 		if(!is_null($config_value) )
 			return $config_value;
 		else
-			throw new \App\Exceptions\MissingConfigOptionException("$option is missing in config");
+			return null;
 	}
 	
 	public function get_for_overlay($overlay, $option)
@@ -43,6 +43,9 @@ class ConfigHelper
 			try
 			{
 				$fallback_config_value = $this->get($option);
+				
+				if(is_null($fallback_config_value) )
+					throw new \App\Exceptions\MissingConfigOptionException("$option is missing in config");
 				
 				return $fallback_config_value;
 			}
