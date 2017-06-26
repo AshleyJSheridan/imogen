@@ -13,7 +13,7 @@ use App\Entities\ImageProperties as ImageProperties;
  */
 interface iImageGenerator
 {
-	public function __construct(Image $image, ConfigHelper $config_helper, ImageProperties $image_properties);
+	public function __construct($overlay_name, Image $image, ConfigHelper $config_helper, ImageProperties $image_properties);
 	
-	public function add($image_layer_index, $overlay_name);
+	public function add($image_layer_index);
 }

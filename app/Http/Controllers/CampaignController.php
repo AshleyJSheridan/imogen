@@ -57,9 +57,9 @@ class CampaignController extends BaseController
 			$type = ucfirst($this->config_helper->get_for_overlay($overlay_name, 'type') );
 			$overlay_generator_class = "App\\ImageGenerators\\{$type}Generator";
 			
-			$overlay_generator_class_instance = new $overlay_generator_class($this->image, $this->config_helper, $this->image_properties);
+			$overlay_generator_class_instance = new $overlay_generator_class($overlay_name, $this->image, $this->config_helper, $this->image_properties);
 			
-			$overlay_generator_class_instance->add($layer_index, $overlay_name);
+			$overlay_generator_class_instance->add($layer_index);
 		}
 		
 		header('Content-Type: image/jpeg');

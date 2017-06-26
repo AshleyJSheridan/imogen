@@ -23,25 +23,25 @@ class TextGenerator implements iImageGenerator
 	private $image_properties;
 	private $source_assets_helper;
 	
-	public function __construct(Image $image, ConfigHelper $config_helper, ImageProperties $image_properties)
+	public function __construct($overlay_name, Image $image, ConfigHelper $config_helper, ImageProperties $image_properties)
 	{
+		$this->overlay_name = $overlay_name;
 		$this->image = $image;
 		$this->config_helper = $config_helper;
 		$this->image_properties = $image_properties;
 		$this->source_assets_helper = new SourceAssetsHelper();
 	}
 	
-	public function add($image_layer_index, $overlay_name)
+	public function add($image_layer_index)
 	{
-		$this->overlay_name = $overlay_name;
 		
 		$bounding_width = $this->get_bounding_box_width();
 		$bounding_height = $this->get_bounding_box_height();
 		
-		$text = $this->get_text_content($overlay_name);
-		$colour = $this->get_and_add_text_colour_to_image($image_layer_index, $overlay_name);
+		$text = $this->get_text_content($this->overlay_name);
+		$colour = $this->get_and_add_text_colour_to_image($image_layer_index, $this->overlay_name);
 		
-		$this->write_text($bounding_width, $bounding_height, $text, $colour, $overlay_name, $image_layer_index);
+		$this->write_text($bounding_width, $bounding_height, $text, $colour, $this->overlay_name, $image_layer_index);
 	}
 	
 	private function write_text($bounding_width, $bounding_height, $text, $colour, $overlay_name, $image_layer_index)
