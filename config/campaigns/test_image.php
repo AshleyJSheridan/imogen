@@ -9,12 +9,8 @@ return array(
 	'overlays'    => array(
 		'emoji' => array(
 			'type'				=> 'image',
-			'url'				=> array(
-				'lynx/pack-body-spray.jpg',
-				'lynx/pack-cream-gel.jpg',
-				'lynx/pack-roll-on.jpg',
-			),
-			'x'					=> 0,
+			'url'				=> 'face-smile-big.png',
+			'x'					=> 100,
 			'y'					=> 100,
 		),
 	),
