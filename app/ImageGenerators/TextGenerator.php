@@ -34,7 +34,6 @@ class TextGenerator implements iImageGenerator
 	
 	public function add_from_config($image_layer_index)
 	{
-		
 		$bounding_width = $this->get_bounding_box_width();
 		$bounding_height = $this->get_bounding_box_height();
 		
