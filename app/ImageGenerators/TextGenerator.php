@@ -32,7 +32,7 @@ class TextGenerator implements iImageGenerator
 		$this->source_assets_helper = new SourceAssetsHelper();
 	}
 	
-	public function add($image_layer_index)
+	public function add_from_config($image_layer_index)
 	{
 		
 		$bounding_width = $this->get_bounding_box_width();

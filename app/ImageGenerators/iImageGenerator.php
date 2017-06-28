@@ -15,5 +15,5 @@ interface iImageGenerator
 {
 	public function __construct($overlay_name, Image $image, ConfigHelper $config_helper, ImageProperties $image_properties);
 	
-	public function add($image_layer_index);
+	public function add_from_config($image_layer_index);
 }
