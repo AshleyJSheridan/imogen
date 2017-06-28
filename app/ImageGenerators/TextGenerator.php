@@ -23,13 +23,13 @@ class TextGenerator implements iImageGenerator
 	private $image_properties;
 	private $source_assets_helper;
 	
-	public function __construct($overlay_name, Image $image, ConfigHelper $config_helper, ImageProperties $image_properties)
+	public function __construct($overlay_name, Image $image, ConfigHelper $config_helper, ImageProperties $image_properties, SourceAssetsHelper $source_assets_helper)
 	{
 		$this->overlay_name = $overlay_name;
 		$this->image = $image;
 		$this->config_helper = $config_helper;
 		$this->image_properties = $image_properties;
-		$this->source_assets_helper = new SourceAssetsHelper();
+		$this->source_assets_helper = $source_assets_helper;
 	}
 	
 	public function add_from_config($image_layer_index)
@@ -141,8 +141,6 @@ class TextGenerator implements iImageGenerator
 		
 		return urldecode(filter_var($content, FILTER_SANITIZE_FULL_SPECIAL_CHARS) );
 	}
-	
-	
 	
 	private function get_bounding_box_width()
 	{

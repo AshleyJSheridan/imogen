@@ -7,6 +7,7 @@ use App\Helpers\ConfigHelper as ConfigHelper;
 use App\ImageGenerators\BaseImageGenerator as BaseImageGenerator;
 use App\Entities\Image as Image;
 use App\Entities\ImageProperties as ImageProperties;
+use App\Helpers\SourceAssetsHelper as SourceAssetsHelper;
 
 /**
  * Description of CampaignController
@@ -19,13 +20,15 @@ class CampaignController extends BaseController
 	private $base_image_generator;
 	private $image;
 	private $image_properties;
+	private $source_assets_helper;
 
-	public function __construct(ConfigHelper $config_helper, BaseImageGenerator $base_image_generator, Image $image, ImageProperties $image_properties)
+	public function __construct(ConfigHelper $config_helper, BaseImageGenerator $base_image_generator, Image $image, ImageProperties $image_properties, SourceAssetsHelper $source_assets_helper)
 	{
 		$this->config_helper = $config_helper;
 		$this->base_image_generator = $base_image_generator;
 		$this->image = $image;
 		$this->image_properties = $image_properties;
+		$this->source_assets_helper = $source_assets_helper;
 	}
 	
 	public function campaign_router()
@@ -57,7 +60,7 @@ class CampaignController extends BaseController
 			$type = ucfirst($this->config_helper->get_for_overlay($overlay_name, 'type') );
 			$overlay_generator_class = "App\\ImageGenerators\\{$type}Generator";
 			
-			$overlay_generator_class_instance = new $overlay_generator_class($overlay_name, $this->image, $this->config_helper, $this->image_properties);
+			$overlay_generator_class_instance = new $overlay_generator_class($overlay_name, $this->image, $this->config_helper, $this->image_properties, $this->source_assets_helper);
 			
 			$overlay_generator_class_instance->add_from_config($layer_index);
 		}

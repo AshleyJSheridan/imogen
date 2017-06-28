@@ -33,7 +33,7 @@ class BaseImageGenerator
 		
 		if(!empty($base_uri) )
 		{
-			$this->base_image = $this->create_base_image_from_existing($base_uri);
+			$this->base_image = $this->source_assets_helper->create_base_image_from_existing($base_uri, $this->image_properties);
 		}
 		else
 		{
@@ -71,34 +71,16 @@ class BaseImageGenerator
 		return $base_image;
 	}
 	
-	private function create_base_image_from_existing($base_uri)
+	/*private function create_base_image_from_existing($base_uri)
 	{
 		$base_real_path = $this->source_assets_helper->get_real_source_path($base_uri);
 		$mime = $this->file_mime_helper->get_mime_type_from_filename($base_uri);
-		$image_data = $this->load_base_image($base_real_path, $mime);
+		$image_data = $this->source_assets_helper->load_base_image($base_real_path, $mime);
 
 		$this->image_properties->set_uri($base_real_path);
 		$this->image_properties->set_dimensions(imagesx($image_data), imagesy($image_data));
 		$this->image_properties->set_mime($mime);
 
 		return $image_data;
-	}
-	
-	private function load_base_image($filename, ImageMime $mime)
-	{
-		switch($mime->get_extension() )
-		{
-			case 'jpeg':
-				$base_image = imagecreatefromjpeg($filename);
-				break;
-			case 'png':
-				$base_image = imagecreatefrompng($filename);
-				break;
-			case 'gif':
-				$base_image = imagecreatefromgif($filename);
-				break;
-		}
-		
-		return $base_image;
-	}
+	}*/
 }
