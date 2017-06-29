@@ -4,6 +4,7 @@ namespace App\Helpers;
 
 use App\Entities\ImageMime as ImageMime;
 use App\Helpers\FileMimeHelper as FileMimeHelper;
+use App\Entities\iImageProperties as iImageProperties;
 
 /**
  * Description of SourceAssetsHelper
@@ -41,16 +42,20 @@ class SourceAssetsHelper
 				break;
 			case 'png':
 				$base_image = imagecreatefrompng($filename);
+				imagealphablending($base_image, false);
+				imagesavealpha($base_image, true);
 				break;
 			case 'gif':
 				$base_image = imagecreatefromgif($filename);
+				imagealphablending($base_image, false);
+				imagesavealpha($base_image, true);
 				break;
 		}
 		
 		return $base_image;
 	}
 
-	public function create_base_image_from_existing($base_uri, &$image_properties)
+	public function create_base_image_from_existing($base_uri, iImageProperties &$image_properties)
 	{
 		$base_real_path = $this->get_real_source_path($base_uri);
 		$mime = $this->file_mime_helper->get_mime_type_from_filename($base_uri);

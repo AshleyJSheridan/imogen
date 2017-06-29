@@ -2,29 +2,20 @@
 
 namespace App\Entities;
 
-use App\Entities\ImageMime as ImageMime;
-use App\Entities\ColourList as ColourList;
-use App\Entities\Colour as Colour;
 use App\Entities\iImageProperties as iImageProperties;
 
 /**
- * Description of ImageProperties
+ * Description of NullImageProperties
  *
  * @author Ashley Sheridan <ash@ashleysheridan.co.uk>
  */
-class ImageProperties implements iImageProperties
+class NullImageProperties implements iImageProperties
 {
 	private $uri;
 	private $width;
 	private $height;
 	private $mime;
-	private $colours;
 	
-	public function __construct(ColourList $colour_list)
-	{
-		$this->colours = $colour_list;
-	}
-
 	public function set_uri($uri)
 	{
 		$this->uri = $uri;
@@ -59,10 +50,5 @@ class ImageProperties implements iImageProperties
 	public function get_mime_string()
 	{
 		return (string)$this->mime;
-	}
-
-	public function add_colour($colour, &$image)
-	{
-		return $this->colours->add_colour($colour, $image);
 	}
 }

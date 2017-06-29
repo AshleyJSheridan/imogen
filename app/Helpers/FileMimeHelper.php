@@ -13,9 +13,9 @@ class FileMimeHelper
 {
 	private $image_mime;
 	
-	public function __construct(ImageMime $image_mime)
+	public function __construct()
 	{
-		$this->image_mime = $image_mime;
+		$this->image_mime = new ImageMime();
 	}
 	
 	public function get_mime_type_from_filename($filename)

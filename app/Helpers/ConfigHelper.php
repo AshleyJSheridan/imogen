@@ -32,7 +32,7 @@ class ConfigHelper
 			return null;
 	}
 	
-	public function get_for_overlay($overlay, $option)
+	public function get_for_overlay($overlay, $option, $default_value = null, $required = true)
 	{
 		$overlay_config_value = config("campaigns.$this->campaign_name.overlays.$overlay.$option");
 		
@@ -40,18 +40,28 @@ class ConfigHelper
 			return $overlay_config_value;
 		else
 		{
-			try
+			if($default_value)
+				return $default_value;
+			else
 			{
-				$fallback_config_value = $this->get($option);
-				
-				if(is_null($fallback_config_value) )
-					throw new \App\Exceptions\MissingConfigOptionException("$option is missing in config");
-				
-				return $fallback_config_value;
-			}
-			catch (MissingConfigOptionException $e)
-			{
-				throw new \App\Exceptions\MissingConfigOptionException("$option is missing in overlay config and no fallback available");
+				try
+				{
+					$fallback_config_value = $this->get($option);
+
+					if(is_null($fallback_config_value) )
+					{
+						if($required)
+							throw new \App\Exceptions\MissingConfigOptionException("$option is missing in config");
+						else
+							return $default_value;
+					}
+
+					return $fallback_config_value;
+				}
+				catch (MissingConfigOptionException $e)
+				{
+					throw new \App\Exceptions\MissingConfigOptionException("$option is missing in overlay config and no fallback available");
+				}
 			}
 		}
 	}
