@@ -22,7 +22,8 @@
             "App\\": "app/",
 			"App\\ImageGenerators\\": "app/ImageGenerators",
 			"App\\Helpers\\": "app/Helpers",
-			"App\\Entities\\": "app/Entities"
+			"App\\Entities\\": "app/Entities",
+			"App\\Renderers\\": "app/Renderers"
         }
     },
     "autoload-dev": {
