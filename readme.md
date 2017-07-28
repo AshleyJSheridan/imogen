@@ -59,6 +59,8 @@ Think of an overlay like a layer in Photoshop. Each image will be made up of one
 
 Each overlay is an array element within the `overlays` array in the config. Depending on the overlay being used will determine the parameters required. You can omit a parameter specific to an overal as long as you include it in the main config layer as a fallback option. This lets you, for example, give a single text colour once, without having to specifiy the same colour repeatedly in each text overlay.
 
+If you specify placeholders in overlays, like `{{param}}`, then the corresponding request parameter value will be used if a matching one is found. If a matching parameter is not found, the placeholder will be replaced with an empty string.
+
 ### Text Overlays
 Parameter | Example | Description
 --- | --- | ---
@@ -69,7 +71,37 @@ Parameter | Example | Description
 `min_size`|14|The minimum font size that this text can be scaled down to if it doesn't fit at the preferred size
 `x1`,`y1`,`x2`,`y2`|`10`|These four specify the coordinates for the bounding box in which to place the text. Coordinates are based on the base image dimensions.
 
+### Image Overlays
+Parameter | Example | Description
+--- | --- | ---
+`type`|`"image"`|The type of overlay
+`url`|`"face-smile-big.png"`|A path to the image, see below for specifying resource files
+`x`|50|The pixel coordinate for the left edge of the placed image
+`y`|50|The pixel coordinate for the top edge of the placed image
+`angle`|45|The angle (in degrees) of the placed image. If the rotation isn't divisible by 90, the overlay will be larger than the source image, so it's worth bearing in mind
+
+### Google Maps Overlays
+Parameter | Example | Description
+--- | --- | ---
+`type`|`"googlemap"`|The type of overlay
+`api_key`|`"some api key string"`|The API key to use. If an array of keys is supplied, one will be picked at random
+`center`|`"{{postcode}}"`|The location to use to center the map on, can be anything that Google accepts as a search parameter
+`zoom`|10|The zoom level to use, larger values mean a higher zoom level
+`source_width`|640|The width of the map image to fetch from Googles API
+`source_height`|480|The height of the map image to fetch from Googles API
+`markers`|`"{{postcode}}"`|A location of where to place a marker on the map. This can be an array of markers so you can place multiple ones all over the map
+`markers_colour`|`#0070b0`|A colour to use for the marker(s)
+`x`|50|The x coordinate to place the map image at
+`y`|50|The y coordinate to place the map image at
+`dest_width`|320|The width of theplaced map, which should be the same or smaller than the `source_width`
+`dest_height`|320|The width of theplaced map, which should be the same or smaller than the `source_height`
+
+### Overlay 
+
 ## License
+
+Imogen is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT).
+
 
 The Laravel framework is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT).
 
