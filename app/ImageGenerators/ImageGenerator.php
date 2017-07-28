@@ -16,7 +16,7 @@ use App\Entities\NullImageProperties as NullImageProperties;
  *
  * @author Ashley Sheridan <ash@ashleysheridan.co.uk>
  */
-class ImageGenerator
+class ImageGenerator implements iImageGenerator
 {
 	private $overlay_name;
 	private $config_helper;
