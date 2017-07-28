@@ -37,7 +37,11 @@ class ConfigHelper
 		$overlay_config_value = config("campaigns.$this->campaign_name.overlays.$overlay.$option");
 		
 		if(!is_null($overlay_config_value) )
+		{
+			$overlay_config_value = $this->substitute_content_with_request_params($overlay_config_value);
+			
 			return $overlay_config_value;
+		}
 		else
 		{
 			if($default_value)
@@ -88,5 +92,14 @@ class ConfigHelper
 		);
 		
 		return $substituted_content;
+	}
+	
+	public function get_for_overlay_with_request_param_substitution($overlay, $option, $default_value = null, $required = true)
+	{
+		$config_value = $this->get_for_overlay($overlay, $option, $default_value, $required);
+		
+		$subsituted_config_value = $this->substitute_content_with_request_params($config_value);
+		
+		return $subsituted_config_value;
 	}
 }

@@ -52,9 +52,9 @@ class CampaignController extends BaseController
 	{
 		$this->apply_overlays_to_image_layer();
 		
-		/*header('Content-Type: image/jpeg');
+		header('Content-Type: image/jpeg');
 		imagejpeg($this->image[0]->image_data);
-		exit;*/
+		exit;
 	}
 	
 	private function apply_overlays_to_image_layer($layer_index = 0)
