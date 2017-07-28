@@ -2,7 +2,7 @@
 return array(
 	'type'			=> 'flat',
 	'description'	=> '',
-	'format'		=> 'png',
+	'format'		=> 'jpg',
 	'width'			=> 430,
 	'height'		=> 500,
 	'background'	=> '#0070b0',
