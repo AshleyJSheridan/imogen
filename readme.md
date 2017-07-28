@@ -96,7 +96,8 @@ Parameter | Example | Description
 `dest_width`|320|The width of theplaced map, which should be the same or smaller than the `source_width`
 `dest_height`|320|The width of theplaced map, which should be the same or smaller than the `source_height`
 
-### Overlay 
+### Resource Asset Paths
+Some of your config values will make reference to external resources, such as images, fonts, etc. If the path is local, these resources will be relative from the `source_assets` directory in the root of the project. If the resource is an external asset, then the full protocal is required.
 
 ## License
 
