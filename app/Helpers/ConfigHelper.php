@@ -22,14 +22,14 @@ class ConfigHelper
 		$this->campaign_name = $this->request->route('name');
 	}
 	
-	public function get($option)
+	public function get($option, $default = null)
 	{
 		$config_value = config("campaigns.$this->campaign_name.$option");
 		
 		if(!is_null($config_value) )
 			return $config_value;
 		else
-			return null;
+			return $default;
 	}
 	
 	public function get_for_overlay($overlay, $option, $default_value = null, $required = true)
