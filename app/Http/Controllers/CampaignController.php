@@ -51,10 +51,6 @@ class CampaignController extends BaseController
 	private function build_flat()
 	{
 		$this->apply_overlays_to_image_layer();
-		
-		header('Content-Type: image/jpeg');
-		imagejpeg($this->image[0]->image_data);
-		exit;
 	}
 	
 	private function apply_overlays_to_image_layer($layer_index = 0)

@@ -23,6 +23,23 @@ class FlatRenderer implements iRenderer
 	
 	public function render(Image $image)
 	{
+		$output_format = $this->config_helper->get('format', 'jpg');
+		$image_data = $image[0]->image_data;
 		
+		switch($output_format)
+		{
+			case 'gif':
+				header('Content-Type: image/gif');
+				imagegif($image_data);
+				break;
+			case 'png':
+				header('Content-Type: image/png');
+				imagepng($image_data);
+				break;
+			default:
+				header('Content-Type: image/jpeg');
+				imagejpeg($image_data);
+				break;
+		}
 	}
 }
