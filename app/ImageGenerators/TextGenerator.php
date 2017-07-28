@@ -131,7 +131,7 @@ class TextGenerator implements iImageGenerator
 		$content_config_key = "overlays.$overlay_name.content";
 		
 		if(is_array($this->config_helper->get($content_config_key) ) )
-			$content = $this->config_helper->get_random ($content_config_key);
+			$content = $this->config_helper->get_random($content_config_key);
 		else
 			$content = $this->config_helper->get($content_config_key);
 		
