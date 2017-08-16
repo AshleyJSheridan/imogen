@@ -22,6 +22,11 @@ class ConfigHelper
 		$this->campaign_name = $this->request->route('name');
 	}
 	
+	public function get_campaign_name()
+	{
+		return $this->campaign_name;
+	}
+
 	public function get($option, $default = null)
 	{
 		$config_value = config("campaigns.$this->campaign_name.$option");
