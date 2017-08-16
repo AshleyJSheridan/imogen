@@ -3,6 +3,7 @@
 namespace App\Renderers;
 
 use App\Helpers\ConfigHelper as ConfigHelper;
+use App\Helpers\CacheFileHelper as CacheFileHelper;
 use App\Renderers\iRenderer as iRenderer;
 
 /**
@@ -14,10 +15,12 @@ use App\Renderers\iRenderer as iRenderer;
 class RenderFactory
 {
 	private $config_helper;
+	private $cache_file_helper;
 	
-	public function __construct(ConfigHelper $config_helper)
+	public function __construct(ConfigHelper $config_helper, CacheFileHelper $cache_file_helper)
 	{
 		$this->config_helper = $config_helper;
+		$this->cache_file_helper = $cache_file_helper;
 	}
 	
 	public function create()
@@ -27,7 +30,7 @@ class RenderFactory
 		if(!class_exists($class_name) )
 			throw new \App\Exceptions\UnsupportedImageRendererException;
 		else
-			$class = new $class_name($this->config_helper);
+			$class = new $class_name($this->config_helper, $this->cache_file_helper);
 		
 		return $class;
 	}

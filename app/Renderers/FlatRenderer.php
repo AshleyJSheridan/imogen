@@ -4,6 +4,7 @@ namespace App\Renderers;
 
 use App\Renderers\iRenderer as iRenderer;
 use App\Helpers\ConfigHelper as ConfigHelper;
+use App\Helpers\CacheFileHelper as CacheFileHelper;
 use App\Entities\Image as Image;
 
 
@@ -15,14 +16,21 @@ use App\Entities\Image as Image;
 class FlatRenderer implements iRenderer
 {
 	private $config_helper;
+	private $cache_file_helper;
 	
-	public function __construct(ConfigHelper $config_helper)
+	public function __construct(ConfigHelper $config_helper, CacheFileHelper $cache_file_helper)
 	{
 		$this->config_helper = $config_helper;
+		$this->cache_file_helper = $cache_file_helper;
 	}
 	
 	public function render(Image $image)
 	{
+		$campaign_name = $this->config_helper->get_campaign_name();
+		$record_id = $this->config_helper->get('record_id');
+		
+		$this->cache_file_helper->get_output_filename($campaign_name, $record_id);
+		
 		$output_format = $this->config_helper->get('format', 'jpg');
 		$image_data = $image[0]->image_data;
 		

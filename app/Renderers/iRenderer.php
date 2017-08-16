@@ -3,6 +3,7 @@
 namespace App\Renderers;
 
 use App\Helpers\ConfigHelper as ConfigHelper;
+use App\Helpers\CacheFileHelper as CacheFileHelper;
 use App\Entities\Image as Image;
 
 /**
@@ -11,7 +12,8 @@ use App\Entities\Image as Image;
  */
 interface iRenderer
 {
-	public function __construct(ConfigHelper $config_helper);
+	public function __construct(ConfigHelper $config_helper, CacheFileHelper $cache_file_helper);
 	
 	public function render(Image $image);
+	
 }
