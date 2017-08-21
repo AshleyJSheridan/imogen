@@ -6,6 +6,7 @@ return array(
 	'width'			=> 640,
 	'height'		=> 480,
 	'background'	=> '#00b070',
+	'cache'			=> '19m 30s',
 	'overlays'    => array(
 		'map' => array(
 			'type'				=> 'googlemap',
