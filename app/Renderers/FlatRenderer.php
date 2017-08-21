@@ -28,26 +28,59 @@ class FlatRenderer implements iRenderer
 	{
 		$campaign_name = $this->config_helper->get_campaign_name();
 		$record_id = $this->config_helper->get('record_id');
-		
-		$this->cache_file_helper->get_output_filename($campaign_name, $record_id);
-		
 		$output_format = $this->config_helper->get('format', 'jpg');
+		$output_filename = $this->cache_file_helper->get_output_filename($campaign_name, $output_format, $record_id);
+
 		$image_data = $image[0]->image_data;
 		
+		$this->save_flat_image_if_uncached($image_data, $output_filename, $output_format);
+		
+		$this->output_image_with_content_headers($output_format, $image_data);
+	}
+	
+	private function save_flat_image_if_uncached($image_data, $output_filename, $output_format)
+	{
+		$cache_duration = $this->cache_file_helper->get_cache_duration($this->config_helper->get('cache') );
+		
+		$cache_file_recent = $this->cache_file_helper->local_cache_file_recent($output_filename, $cache_duration);
+		
+		if(!$cache_file_recent)
+		{
+			$this->output_image($output_format, $image_data, $output_filename);
+		}
+	}
+	
+	private function output_image($output_format, $image_data, $filename = null)
+	{
 		switch($output_format)
 		{
 			case 'gif':
-				header('Content-Type: image/gif');
-				imagegif($image_data);
+				imagegif($image_data, $filename);
 				break;
 			case 'png':
-				header('Content-Type: image/png');
-				imagepng($image_data);
+				imagepng($image_data, $filename);
 				break;
 			default:
-				header('Content-Type: image/jpeg');
-				imagejpeg($image_data);
+				imagejpeg($image_data, $filename);
 				break;
+		}
+	}
+	
+	private function output_image_with_content_headers($output_format, $image_data)
+	{
+		$this->output_image_headers($output_format);
+		$this->output_image($output_format, $image_data);
+	}
+	
+	private function output_image_headers($output_format)
+	{
+		if(in_array($output_format, ['gif', 'png']) )
+		{
+			header("Content-Type: image/$output_format");
+		}
+		else
+		{
+			header('Content-Type: image/jpeg');
 		}
 	}
 }
