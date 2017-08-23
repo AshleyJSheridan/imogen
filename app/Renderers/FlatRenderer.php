@@ -38,6 +38,40 @@ class FlatRenderer implements iRenderer
 		$this->output_image_with_content_headers($output_format, $image_data);
 	}
 	
+	public function output_image_from_local_cache($output_filename)
+	{
+		$output_format = $this->config_helper->get('format', 'jpg');
+		
+		$gd_image_data = $this->get_gd_image_from_cache_file($output_filename, $output_format);
+		
+		$this->output_image_with_content_headers($output_format, $gd_image_data);
+	}
+	
+	private function get_gd_image_from_cache_file($cache_file, $output_format)
+	{
+		try
+		{
+			switch($output_format)
+			{
+				case 'png':
+					$gd_image = imagecreatefrompng($cache_file);
+					break;
+				case 'gif':
+					$gd_image = imagecreatefromgif($cache_file);
+					break;
+				default:
+					$gd_image = imagecreatefromjpeg($cache_file);
+					break;
+			}
+		}
+		catch(Exception $e)
+		{
+			return false;
+		}
+		
+		return $gd_image;
+	}
+
 	private function save_flat_image_if_uncached($image_data, $output_filename, $output_format)
 	{
 		$cache_duration = $this->cache_file_helper->get_cache_duration($this->config_helper->get('cache') );
