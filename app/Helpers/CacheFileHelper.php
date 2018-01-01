@@ -27,7 +27,7 @@ class CacheFileHelper
 		$extension = $this->get_file_extension($output_format);
 		
 		if(!empty($record_id) )
-			$basename = $this->get_hashed_filename ($record_id);
+			$basename = $this->get_hashed_filename($record_id);
 		else
 			$basename = $this->get_output_base_filename_as_string();
 			
