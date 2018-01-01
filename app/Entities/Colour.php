@@ -27,7 +27,19 @@ class Colour
 	
 	public function get_string()
 	{
-		return dechex($this->r) . dechex($this->g) . dechex($this->b) . dechex($this->alpha);
+		$r = str_pad(dechex($this->r), 2, '0', STR_PAD_LEFT);
+		$g = str_pad(dechex($this->g), 2, '0', STR_PAD_LEFT);
+		$b = str_pad(dechex($this->b), 2, '0', STR_PAD_LEFT);
+		$alpha = str_pad(dechex($this->alpha), 2, '0', STR_PAD_LEFT);
+
+		if($this->alpha)
+		{
+			return $r . $g . $b . $alpha;
+		}
+		else
+		{
+			return $r . $g . $b;
+		}
 	}
 	
 	public function get_red()
@@ -63,11 +75,11 @@ class Colour
 				$colour = preg_replace('/^([0-9a-z])([0-9a-z])([0-9a-z])$/', '$1$1$2$2$3$3', $colour);
 				break;
 			case 4:
-				$this->alpha = intval(floor(hexdec(substr($colour, -1).substr($colour, -1) ) / 2 ) );
+				$this->alpha = intval(hexdec(substr($colour, -1).substr($colour, -1) ) );
 				$colour = preg_replace('/^([0-9a-z])([0-9a-z])([0-9a-z])([0-9a-z])$/', '$1$1$2$2$3$3', $colour);
 				break;
 			case 8:
-				$this->alpha = intval(floor(hexdec(substr($colour, -2) ) / 2 ) );
+				$this->alpha = intval(hexdec(substr($colour, -2) ) );
 				$colour = substr($colour, 0, 6);
 				break;
 			default:
