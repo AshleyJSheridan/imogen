@@ -4,7 +4,6 @@ namespace App\Entities;
 
 use App\Entities\ImageMime as ImageMime;
 use App\Entities\ColourList as ColourList;
-use App\Entities\Colour as Colour;
 use App\Entities\iImageProperties as iImageProperties;
 
 /**
