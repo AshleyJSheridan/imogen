@@ -33,6 +33,11 @@ class EntityImageTest extends TestCase
 		unset($this->layer1);
 		unset($this->layer2);
 	}
+	
+	public function testImageEntityConstruction()
+    {
+        $this->assertTrue($this->image instanceof Image);
+    }
 
 	public function testAddImageLayer()
 	{
