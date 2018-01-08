@@ -43,7 +43,7 @@ class EntityColourListTest extends TestCase
 			->setMethods(['get_string', '__construct'])
 			->disableOriginalConstructor()
 			->setConstructorArgs(array($colour_string))
-			->getMock($colour_string);
+			->getMock();
 		
 		$mock_colour->expects($this->once())
 			->method('get_string');

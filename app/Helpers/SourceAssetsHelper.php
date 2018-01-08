@@ -5,6 +5,7 @@ namespace App\Helpers;
 use App\Entities\ImageMime as ImageMime;
 use App\Helpers\FileMimeHelper as FileMimeHelper;
 use App\Entities\iImageProperties as iImageProperties;
+use App\Helpers\PathHelper as PathHelper;
 
 /**
  * Description of SourceAssetsHelper
@@ -15,24 +16,26 @@ class SourceAssetsHelper
 {
 	private $base_path;
 	private $file_mime_helper;
+	private $path_helper;
 	
-	public function __construct(FileMimeHelper $file_mime_helper)
+	public function __construct(FileMimeHelper $file_mime_helper, PathHelper $path_helper)
 	{
-		$this->base_path = getcwd() . '/../source_assets';
 		$this->file_mime_helper = $file_mime_helper;
+		$this->path_helper = $path_helper;
+		$this->base_path = $this->path_helper->get_current_working_directory() . '/../source_assets';
 	}
 	
 	public function get_real_source_path($base_uri)
 	{
 		$path = "$this->base_path/$base_uri";
-		$real_path = realpath($path);
+		$real_path = $this->path_helper->get_real_path($path);
 
 		if(!$real_path)
 			throw new \App\Exceptions\InvalidImageBaseException("Invalid source asset $path specified");
 		else
 			return $real_path;
 	}
-	
+
 	public function load_base_image($filename, ImageMime $mime)
 	{
 		switch($mime->get_extension() )
