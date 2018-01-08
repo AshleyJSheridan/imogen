@@ -1,6 +1,5 @@
 <?php
 
-//namespace Tests\UnitHelpers;
 namespace App\Helpers;
 
 use Tests\TestCase;
@@ -21,7 +20,6 @@ class HelperSourceAssetsHelperTest extends TestCase
 		$this->path_helper = new mockPathHelper();
 		
 		$this->mock_helper = $this->getMockBuilder(SourceAssetsHelper::class)
-			//->setMethods(['is_real_path'])
 			->setConstructorArgs(array($this->file_mime_helper, $this->path_helper))
 			->getMock();
 		
