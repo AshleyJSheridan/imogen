@@ -6,7 +6,7 @@ use Illuminate\Routing\Controller as BaseController;
 use App\Helpers\ConfigHelper as ConfigHelper;
 use App\ImageGenerators\BaseImageGenerator as BaseImageGenerator;
 use App\Entities\Image as Image;
-use App\Entities\ImageProperties as ImageProperties;
+use App\ImageGenerators\ImageLayerFactory as ImageLayerFactory;
 use App\Helpers\SourceAssetsHelper as SourceAssetsHelper;
 use App\Renderers\RenderFactory as RenderFactory;
 use App\Helpers\CacheFileHelper as CacheFileHelper;
@@ -21,22 +21,22 @@ class CampaignController extends BaseController
 	private $config_helper;
 	private $base_image_generator;
 	private $image;
-	private $image_properties;
 	private $source_assets_helper;
 	private $render_factory;
 	private $cache_file_helper;
+	private $image_layer_factory;
 
 	public function __construct(ConfigHelper $config_helper, BaseImageGenerator $base_image_generator,
-			Image $image, ImageProperties $image_properties, SourceAssetsHelper $source_assets_helper,
-			RenderFactory $render_factory, CacheFileHelper $cache_file_helper)
+			Image $image, SourceAssetsHelper $source_assets_helper,
+			RenderFactory $render_factory, CacheFileHelper $cache_file_helper, ImageLayerFactory $image_layer_factory)
 	{
 		$this->config_helper = $config_helper;
 		$this->base_image_generator = $base_image_generator;
 		$this->image = $image;
-		$this->image_properties = $image_properties;
 		$this->source_assets_helper = $source_assets_helper;
 		$this->render_factory = $render_factory;
 		$this->cache_file_helper = $cache_file_helper;
+		$this->image_layer_factory = $image_layer_factory;
 	}
 	
 	public function campaign_router()
@@ -97,11 +97,10 @@ class CampaignController extends BaseController
 		
 		foreach($overlays as $overlay_name => $overlay_details)
 		{
-			$type = ucfirst($this->config_helper->get_for_overlay($overlay_name, 'type') );
-			$overlay_generator_class = "App\\ImageGenerators\\{$type}Generator";
-			
-			$overlay_generator_class_instance = new $overlay_generator_class($overlay_name, $this->image, $this->config_helper, $this->image_properties, $this->source_assets_helper);
-			
+			$class_name = $this->config_helper->get_for_overlay($overlay_name, 'type');
+
+			$overlay_generator_class_instance = $this->image_layer_factory->get_layer_class_instance($class_name, $overlay_name, $this->image);
+
 			$overlay_generator_class_instance->add_from_config($layer_index);
 		}
 	}

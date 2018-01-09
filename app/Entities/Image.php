@@ -3,6 +3,7 @@
 namespace App\Entities;
 
 use App\Entities\ImageLayer as ImageLayer;
+use App\Entities\ImageProperties as ImageProperties;
 
 /**
  * Description of Image
@@ -12,6 +13,12 @@ use App\Entities\ImageLayer as ImageLayer;
 class Image implements \ArrayAccess
 {
 	private $image_layers = [];
+	private $image_properties;
+	
+	public function __construct(ImageProperties $image_properties)
+	{
+		$this->image_properties = $image_properties;
+	}
 	
 	public function offsetExists($offset)
 	{
@@ -39,5 +46,10 @@ class Image implements \ArrayAccess
 	public function add_layer(ImageLayer $image_layer)
 	{
 		$this->image_layers[] = $image_layer;
+	}
+	
+	public function get_image_properties()
+	{
+		return $this->image_properties;
 	}
 }

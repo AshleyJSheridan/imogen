@@ -4,6 +4,7 @@ namespace App\Helpers;
 
 use App\Entities\ConfigNullObject as ConfigNullObject;
 use Illuminate\Http\Request;
+use App\Helpers\ConfigRequestSubstitutionHelper as ConfigRequestSubstitutionHelper;
 
 /**
  * Description of ConfigHelper
@@ -15,10 +16,12 @@ class ConfigHelper
 	private $campaign_name;
 	private $config;
 	private $request;
+	private $requestSubstitutionsHelper;
 	
-	public function __construct(Request $request)
+	public function __construct(Request $request, ConfigRequestSubstitutionHelper $requestSubstitutionsHelper)
 	{
 		$this->request = $request;
+		$this->requestSubstitutionsHelper = $requestSubstitutionsHelper;
 		$this->campaign_name = $this->request->route('name');
 	}
 	
@@ -32,9 +35,13 @@ class ConfigHelper
 		$config_value = config("campaigns.$this->campaign_name.$option");
 		
 		if(!is_null($config_value) )
+		{
 			return $config_value;
+		}
 		else
+		{
 			return $default;
+		}
 	}
 	
 	public function get_for_overlay($overlay, $option, $default_value = null, $required = true)
@@ -43,36 +50,38 @@ class ConfigHelper
 		
 		if(!is_null($overlay_config_value) )
 		{
-			$overlay_config_value = $this->substitute_content_with_request_params($overlay_config_value);
-			
-			return $overlay_config_value;
+			return $this->requestSubstitutionsHelper->substitute_content_with_request_params($overlay_config_value);
 		}
 		else
 		{
-			if($default_value)
-				return $default_value;
-			else
+			try
 			{
-				try
-				{
-					$fallback_config_value = $this->get($option);
-
-					if(is_null($fallback_config_value) )
-					{
-						if($required)
-							throw new \App\Exceptions\MissingConfigOptionException("$option is missing in config");
-						else
-							return $default_value;
-					}
-
-					return $fallback_config_value;
-				}
-				catch (MissingConfigOptionException $e)
-				{
-					throw new \App\Exceptions\MissingConfigOptionException("$option is missing in overlay config and no fallback available");
-				}
+				return $this->get_fallback_or_default_value($option, $default_value, $required);
+			}
+			catch (MissingConfigOptionException $e)
+			{
+				throw new \App\Exceptions\MissingConfigOptionException("$option is missing in overlay config and no fallback available");
 			}
 		}
+	}
+	
+	public function get_fallback_or_default_value($option, $default_value = null, $required = true)
+	{
+		$fallback_config_value = $this->get($option);
+
+		if(is_null($fallback_config_value) )
+		{
+			if($required)
+			{
+				throw new \App\Exceptions\MissingConfigOptionException("$option is missing in config");
+			}
+			else
+			{
+				return $default_value;
+			}
+		}
+
+		return $fallback_config_value;		
 	}
 	
 	public function get_random($option)
@@ -81,29 +90,17 @@ class ConfigHelper
 		
 		return $content_array[rand(0, count($content_array) - 1 )];
 	}
-	
+
 	public function substitute_content_with_request_params($content)
 	{
-		// the regular expression matches any substring in the form {{substring}} and replaces it with
-		// the value of the corresponding request parameter of the same key
-		$substituted_content = preg_replace_callback(
-			'/\{\{([^\}]+)\}\}/',
-			function($matches) {
-				$param_key = $matches[1];
-			
-				return $this->request->get($param_key);
-			},
-			$content
-		);
-		
-		return $substituted_content;
+		return $this->requestSubstitutionsHelper->substitute_content_with_request_params($content);
 	}
 	
 	public function get_for_overlay_with_request_param_substitution($overlay, $option, $default_value = null, $required = true)
 	{
 		$config_value = $this->get_for_overlay($overlay, $option, $default_value, $required);
 		
-		$subsituted_config_value = $this->substitute_content_with_request_params($config_value);
+		$subsituted_config_value = $this->requestSubstitutionsHelper->substitute_content_with_request_params($config_value);
 		
 		return $subsituted_config_value;
 	}
