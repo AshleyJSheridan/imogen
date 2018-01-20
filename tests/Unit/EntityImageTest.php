@@ -22,7 +22,7 @@ class EntityImageTest extends TestCase
 		$this->colour_list = new ColourList();
 		$this->properties = new ImageProperties($this->colour_list);
 		$this->image_data = 'some image data';
-		$this->image = new Image();
+		$this->image = new Image($this->properties);
 		$this->layer1 = new ImageLayer($this->image_data, $this->properties);
 		$this->layer2 = new ImageLayer($this->image_data, $this->properties);
 	}
