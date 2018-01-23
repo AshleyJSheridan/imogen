@@ -5,7 +5,7 @@ namespace App\Helpers;
 use Tests\TestCase;
 use App\Helpers\FileMimeHelper as FileMimeHelper;
 use App\Helpers\SourceAssetsHelper as SourceAssetsHelper;
-use App\Helpers\iPathHelper as iPathHelper;
+use App\Entities\ImageMime as ImageMime;
 
 class HelperSourceAssetsHelperTest extends TestCase
 {
@@ -43,6 +43,40 @@ class HelperSourceAssetsHelperTest extends TestCase
 		
 		$this->assertEquals($real_path, 'some real path');
 	}
+	
+	public function testLoadBaseImageWithJpeg()
+	{
+		$mime = new ImageMime();
+		$mime->set_mime('image/jpeg');
+		$filename = 'some filename';
+		
+		$base_image = $this->helper->load_base_image($filename, $mime);
+		
+		$this->assertEquals($base_image, 'jpeg image');
+	}
+	
+	public function testLoadBaseImageWithPng()
+	{
+		$mime = new ImageMime();
+		$mime->set_mime('image/png');
+		$filename = 'some filename';
+
+		$base_image = $this->helper->load_base_image($filename, $mime);
+		
+		$this->assertEquals($base_image, 'png image');
+	}
+	
+	public function testLoadBaseImageWithGif()
+	{
+		$mime = new ImageMime();
+		$mime->set_mime('image/gif');
+		$filename = 'some filename';
+
+		$base_image = $this->helper->load_base_image($filename, $mime);
+		
+		$this->assertEquals($base_image, 'gif image');
+	}
+
 }
 
 class mockPathHelper extends PathHelper
@@ -55,5 +89,36 @@ class mockPathHelper extends PathHelper
 	public function get_current_working_directory()
 	{
 		return 'some_dir';
+	}
+}
+
+function imagecreatefromjpeg($filename)
+{
+	return 'jpeg image';
+}
+
+function imagecreatefrompng($filename)
+{
+	return 'png image';
+}
+
+function imagecreatefromgif($filename)
+{
+	return 'gif image';
+}
+
+function imagealphablending($base_image, $blend_mode)
+{
+	if($blend_mode)
+	{
+		assert(false, "blend mode should be false");
+	}
+}
+
+function imagesavealpha($base_image, $save_flag)
+{
+	if(!$save_flag)
+	{
+		assert(false, "save flag should be true");
 	}
 }
