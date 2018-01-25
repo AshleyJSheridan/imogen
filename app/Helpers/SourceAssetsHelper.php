@@ -61,7 +61,7 @@ class SourceAssetsHelper
 	public function create_base_image_from_existing($base_uri, iImageProperties &$image_properties)
 	{
 		$base_real_path = $this->get_real_source_path($base_uri);
-		$mime = $this->file_mime_helper->get_mime_type_from_filename($base_uri);
+		$mime = $this->get_mime_type_from_filename($base_uri);
 		$image_data = $this->load_base_image($base_real_path, $mime);
 
 		$image_properties->set_uri($base_real_path);
@@ -69,5 +69,10 @@ class SourceAssetsHelper
 		$image_properties->set_mime($mime);
 
 		return $image_data;
+	}
+	
+	public function get_mime_type_from_filename($filename)
+	{
+		return $this->file_mime_helper->get_mime_type_from_filename($filename);
 	}
 }
