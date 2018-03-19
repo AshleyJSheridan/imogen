@@ -13,7 +13,7 @@ class HelperFileMimeHelperTest extends TestCase
 		$this->helper = new FileMimeHelper();
 	}
 	
-	public function testSourceAssetsHelperConstruction()
+	public function testFileMimeHelperConstruction()
 	{
 		$this->assertTrue($this->helper instanceof FileMimeHelper);
 	}

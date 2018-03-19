@@ -57,14 +57,14 @@ class CacheFileHelper
 			{
 				return false;
 			}
-			
+
 			return !((time() - $cache_duration) > $cache_file_timestamp);
 		}
 	}
 	
 	public function get_cache_duration($duration)
 	{
-		if(preg_match_all('/(?:([\d]+)([smhdw]))+/', $duration, $matches) && count($matches[1]) )
+		if(preg_match_all('/(?:([\d]+)([smhdw]))/', $duration, $matches) && count($matches[1]) )
 		{
 			$cache_duration = 0;
 			
@@ -129,7 +129,7 @@ class CacheFileHelper
 		return $multiplier;
 	}
 	
-	private function get_file_extension($output_format)
+	protected function get_file_extension($output_format)
 	{
 		switch($output_format)
 		{
@@ -143,7 +143,7 @@ class CacheFileHelper
 		}
 	}
 	
-	private function create_output_directory($campaign_name)
+	protected function create_output_directory($campaign_name)
 	{
 		$assets_dir_path = getcwd() . '/../dist_assets/';
 		$assets_dir = realpath($assets_dir_path);
@@ -161,7 +161,7 @@ class CacheFileHelper
 		return $campaign_assets_dir;
 	}
 	
-	private function get_output_base_filename_as_string()
+	protected function get_output_base_filename_as_string()
 	{
 		$campaign_path = $this->request->path();
 		$query_string = $this->request->getQueryString();
@@ -172,7 +172,7 @@ class CacheFileHelper
 		return $hashed_filename;
 	}
 	
-	private function get_hashed_filename($filename)
+	protected function get_hashed_filename($filename)
 	{
 		return md5($filename);
 	}

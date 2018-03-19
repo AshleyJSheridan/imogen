@@ -26,6 +26,14 @@ class HelperSourceAssetsHelperTest extends TestCase
 		
 		$this->helper = new SourceAssetsHelper($this->file_mime_helper, $this->path_helper);
 	}
+	
+	protected function tearDown()
+	{
+		unset($this->file_mime_helper);
+		unset($this->path_helper);
+		unset($this->mock_helper);
+		unset($this->helper);
+	}
 
 	public function testSourceAssetsHelperConstruction()
 	{

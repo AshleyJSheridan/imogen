@@ -12,7 +12,12 @@ class HelperPathHelperTest extends TestCase
 		$this->helper = new PathHelper();
 	}
 	
-	public function testSourceAssetsHelperConstruction()
+	protected function tearDown()
+	{
+		unset($this->helper);
+	}
+	
+	public function testPathHelperConstruction()
 	{
 		$this->assertTrue($this->helper instanceof PathHelper);
 	}

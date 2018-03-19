@@ -16,7 +16,7 @@ class HelperConfigRequestSubstitutionHelper extends TestCase
 		$this->helper = new ConfigRequestSubstitutionHelper($request);
 	}
 	
-	public function testSourceAssetsHelperConstruction()
+	public function testConfigRequestSubstitutionHelperConstruction()
 	{
 		$this->assertTrue($this->helper instanceof ConfigRequestSubstitutionHelper);
 	}
