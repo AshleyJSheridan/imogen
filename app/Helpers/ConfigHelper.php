@@ -58,7 +58,7 @@ class ConfigHelper
 			{
 				return $this->get_fallback_or_default_value($option, $default_value, $required);
 			}
-			catch (MissingConfigOptionException $e)
+			catch (\Exception $e)
 			{
 				throw new \App\Exceptions\MissingConfigOptionException("$option is missing in overlay config and no fallback available");
 			}
