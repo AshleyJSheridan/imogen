@@ -58,7 +58,7 @@ class ConfigHelper
 			{
 				return $this->get_fallback_or_default_value($option, $default_value, $required);
 			}
-			catch (\Exception $e)
+			catch (\App\Exceptions\MissingConfigOptionException $e)
 			{
 				throw new \App\Exceptions\MissingConfigOptionException("$option is missing in overlay config and no fallback available");
 			}
@@ -84,9 +84,9 @@ class ConfigHelper
 		return $fallback_config_value;		
 	}
 	
-	public function get_random($option)
+	public function get_random($overlay, $option)
 	{
-		$content_array = $this->get_for_overlay($option);
+		$content_array = $this->get_for_overlay($overlay, $option);
 		
 		return $content_array[rand(0, count($content_array) - 1 )];
 	}
