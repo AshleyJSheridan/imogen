@@ -43,7 +43,7 @@ class BaseImageGenerator
 			}
 			else
 			{
-				throw new App\Exceptions\InvalidImageBaseException('Invalid base image, or width and height base values');
+				throw new \App\Exceptions\InvalidImageBaseException('Invalid base image, or width and height base values');
 			}
 		}
 
@@ -56,7 +56,7 @@ class BaseImageGenerator
 	{
 		$base_image = imagecreatetruecolor($width, $height);
 		$base_mime = $this->file_mime_helper->get_mime_from_extension($format);
-		
+
 		$this->image_properties->set_dimensions($width, $height);
 		$this->image_properties->set_mime($base_mime);
 		
