@@ -46,24 +46,26 @@ class CampaignController extends BaseController
 		$image_generation_type = $this->config_helper->get('type');
 		
 		$renderer = $this->render_factory->create();
-		
+
 		if($cache_file_recent)
 		{
 			$renderer->output_image_from_local_cache($output_filename);
 			
 			var_dump('recent');
-			exit;
 		}
-		
-		$this->image->add_layer($this->base_image_generator->create_base_image($this->config_helper) );
-		
-		if(!method_exists($this, "build_$image_generation_type") )
-			throw new \App\Exceptions\UnsupportedImageGeneratorException("Unsupported image generation type: $image_generation_type");
 		else
-			$this->{"build_$image_generation_type"}();
-		
-		
-		$renderer->render($this->image);
+		{
+			$this->image->add_layer($this->base_image_generator->create_base_image($this->config_helper) );
+
+			if(method_exists($this, "build_$image_generation_type") )
+			{
+				$this->{"build_$image_generation_type"}();
+			}
+			else
+				throw new \App\Exceptions\UnsupportedImageGeneratorException("Unsupported image generation type: $image_generation_type");
+
+			$renderer->render($this->image);
+		}
 	}
 
 	private function build_flat()
