@@ -41,8 +41,8 @@ class ImageLayerFactory
 			}
 			case 'googlemap':
 			{
-				$overlay_generator_class_instance = new GoolemapGenerator($overlay_name, $image, $this->config_helper, $image->get_image_properties(), $this->source_assets_helper);
-				
+				$overlay_generator_class_instance = new GooglemapGenerator($overlay_name, $image, $this->config_helper, $image->get_image_properties(), $this->source_assets_helper);
+
 				break;
 			}
 		}
